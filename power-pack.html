@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finance Guru Pro — Power Pack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    :root {
+      --accent: #c9a84c;
+      --accent-light: #f0d080;
+      --dark: #0a0a0a;
+      --card: #141414;
+      --border: #2a2a2a;
+      --text: #f5f5f0;
+      --muted: #888;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark); color: var(--text);
+      font-family: 'DM Sans', sans-serif; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.05) 0%, transparent 50%);
+    }
+    .container { max-width: 420px; width: 100%; animation: fadeUp 0.6s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+      color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 900;
+      line-height: 1.15; margin-bottom: 6px;
+      background: linear-gradient(135deg, #fff 40%, var(--accent-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .pack-name { font-size: 13px; font-weight: 600; letter-spacing: 1px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+    .subtitle { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 32px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-bottom: 16px; }
+    .trial-banner {
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 16px 20px;
+      margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+    }
+    .trial-icon { font-size: 24px; flex-shrink: 0; }
+    .trial-text strong { display: block; color: var(--accent); font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .trial-text span { color: var(--muted); font-size: 13px; }
+    .features { list-style: none; margin-bottom: 24px; }
+    .features li { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 14px; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .features li:last-child { border-bottom: none; }
+    .features li::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+    .price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 20px; }
+    .price { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: #fff; }
+    .price-sub { color: var(--muted); font-size: 14px; }
+    .btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--accent), #a87c2a);
+      color: #0a0a0a; font-family: 'DM Sans', sans-serif;
+      font-size: 15px; font-weight: 700; border: none; border-radius: 12px;
+      cursor: pointer; letter-spacing: 0.5px; transition: all 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.35); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(0,0,0,0.3); border-top-color: #000; border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .note { text-align: center; color: var(--muted); font-size: 12px; margin-top: 14px; }
+    .success-screen { display: none; text-align: center; padding: 40px 20px; }
+    .success-icon { font-size: 64px; margin-bottom: 20px; animation: pop 0.4s ease both; }
+    @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+    .success-screen h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 10px; color: var(--accent); }
+    .success-screen p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="mainScreen">
+      <div class="badge">⚡ Power Pack</div>
+      <h1>Finance Guru Pro</h1>
+      <p class="pack-name">Power Pack | ₹499 Bi-Weekly</p>
+      <p class="subtitle">हर 2 हफ्ते में premium signals, live calls और advanced market analysis।</p>
+      <div class="card">
+        <div class="trial-banner">
+          <div class="trial-icon">🎁</div>
+          <div class="trial-text">
+            <strong>3 दिन FREE Trial</strong>
+            <span>पहले try करो, फिर तय करो</span>
+          </div>
+        </div>
+        <ul class="features">
+          <li>Bi-Weekly Premium Signals</li>
+          <li>Live Market Calls</li>
+          <li>Advanced Technical Analysis</li>
+          <li>Priority Community Access</li>
+          <li>Cancel Anytime</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">₹499</span>
+          <span class="price-sub">/ 2 weeks</span>
+        </div>
+        <button class="btn" id="payBtn" onclick="startPayment()">
+          <span id="btnText">3 दिन Free में Start करो →</span>
+          <div class="spinner" id="spinner"></div>
+        </button>
+        <p class="note">🔒 Secured by Razorpay &nbsp;·&nbsp; Cancel anytime</p>
+      </div>
+    </div>
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <h2>Welcome to Pro!</h2>
+      <p>तुम्हारा 3 दिन का Free Trial शुरू हो गया।<br/>3 दिन बाद ₹499 हर 2 हफ्ते automatically charge होगा।</p>
+    </div>
+  </div>
+  <script>
+    const BACKEND_URL = "https://subscription-backend-production-22c7.up.railway.app";
+    const PLAN_ID = "plan_SdI8TIRpa5K4Li";
+    const RAZORPAY_KEY_ID = "rzp_test_Sew2LfWdomOJ7Q"; // ← अपनी Key ID डालो
+
+    async function startPayment() {
+      const btn = document.getElementById("payBtn");
+      const btnText = document.getElementById("btnText");
+      const spinner = document.getElementById("spinner");
+      btn.disabled = true; btnText.style.display = "none"; spinner.style.display = "block";
+      try {
+        const res = await fetch(`${BACKEND_URL}/create-subscription`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ plan_id: PLAN_ID }),
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        const options = {
+          key: RAZORPAY_KEY_ID, subscription_id: data.subscription_id,
+          name: "Finance Guru Pro", description: "Power Pack — ₹499 Bi-Weekly",
+          handler: async function (response) {
+            const verify = await fetch(`${BACKEND_URL}/verify-payment`, {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_subscription_id: response.razorpay_subscription_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+            const result = await verify.json();
+            if (result.success) {
+              document.getElementById("mainScreen").style.display = "none";
+              document.getElementById("successScreen").style.display = "block";
+            }
+          },
+          prefill: { name: "Finance Guru User", email: "", contact: "" },
+          modal: { ondismiss: function() { btn.disabled = false; btnText.style.display = "block"; spinner.style.display = "none"; } },
+          theme: { color: "#c9a84c" },
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } catch (err) {
+        alert("कुछ गलत हुआ: " + err.message);
+      } finally {
+        btn.disabled = false; btnText.style.display = "block"; spinner.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
